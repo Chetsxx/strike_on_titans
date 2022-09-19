@@ -7,7 +7,7 @@ import time
 screen = Screen()
 screen.setup(700, 600)
 screen.bgcolor("black")
-screen.title("Attack on Titans")
+screen.title("Strike on Titans")
 screen.tracer(0)
 screen.register_shape('gif/giphy.gif')
 screen.register_shape('gif/duster.gif')
@@ -28,13 +28,18 @@ def shoot():
     atk.setheading(90)
     shooting = True
 
+
 def was_hit():
+    global shooting
     for t in titan.all_titans:
         if atk.distance(t) < 15:
             t.hideturtle()
-            t.setpos(x=-290, y=230)
-            atk.hideturtle()
+            t.goto(t.xcor(), 300)
             return True
+        elif atk.distance(t) > 15 and atk.ycor() > 240:
+            atk.hideturtle()
+            atk.setpos(player.xcor(), player.ycor())
+            shooting = False
 
 def attack_hit():
     for r in titan_attack.all_rock:
@@ -75,10 +80,5 @@ while game_on:
 
     if attack_hit():
         game_on = False
-
-
-
-
-
 
 screen.exitonclick()
